@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { AuthSessionProvier } from '@/providers/authctx';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -17,13 +18,26 @@ export default function RootLayout() {
     return null;
   }
 
+
+// HVIS MAN SKAL NAVIGERE til noe som ikke er i tabBar legges Stack.Screen her!
+
   return (
+    <AuthSessionProvier> 
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{
+          headerShown: false
+          }}/>
         <Stack.Screen name="+not-found" />
+        <Stack.Screen name="post-details" />
+        <Stack.Screen name="declarations" />
+        <Stack.Screen name="post-details/[id]" />
+
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
+    </AuthSessionProvier>
   );
 }
+
+//Appen er inne i en session med Autentication fra providers-mappe
